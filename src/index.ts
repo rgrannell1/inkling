@@ -4,26 +4,49 @@ import {render as inkRender} from 'ink'
 import type {Instance as InkInstance} from 'ink'
 
 import {
-  Stdin,
-  Stderr,
-  Stdout
+  stubStdin,
+  stubStderr,
+  stubStdout
 } from './fd.js'
 
-class Inkling {
+interface GetComponentArgs {
+  stdin: any,
+  stderr: any,
+  stdout: any
+}
+
+type GetComponent = (data:GetComponentArgs) => ReactElement
+
+export default class Inkling {
   instance:InkInstance
-  constructor (tree:ReactElement) {
-    const stdout = new Stdout()
-    const stdin = new Stdin()
-    const stderr = new Stderr()
+  stdin:any
+  stdout:any
+  stderr:any
+  constructor (getComponent:GetComponent) {
+    this.stdout = stubStdout({
+      rows: 25,
+      columns: 100
+    })
+    this.stdin = stubStdin()
+    this.stderr = stubStderr()
+
+    const tree = getComponent({
+      stdin: this.stdin,
+      stdout: this.stdout,
+      stderr: this.stderr
+    })
 
     this.instance = inkRender(tree, {
-      stdout: stdout as any,
-      stdin: stdin as any,
-      stderr: stderr as any,
+      stdout: this.stdout as any,
+      stdin: this.stdin as any,
+      stderr: this.stderr as any,
       debug: true,
-      exitOnCtrlC: true,
+      exitOnCtrlC: false,
       patchConsole: false
     })
   }
+  content () {
+    // -- not defined on event-emitter type, readd.
+    return this.stdout.lastFrame()
+  }
 }
-

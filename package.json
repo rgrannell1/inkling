@@ -1,19 +1,25 @@
 {
   "name": "inkling",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Róisín Grannell <r.grannell2@gmail.com>",
+  "license": "MIT",
   "dependencies": {
-    "@types/node": "^14.14.2",
-    "@types/react": "^16.9.53",
-    "@types/typescript": "^2.0.0",
-    "ink": "^3.0.8",
-    "react": "^17.0.1",
-    "typescript": "^4.0.3"
+    "@types/node": "14.14.2",
+    "@types/react": "16.9.53",
+    "@types/split": "1.0.0",
+    "@types/through": "0.0.30",
+    "@types/typescript": "2.0.0",
+    "emit-stream": "0.1.2",
+    "ink": "3.0.8",
+    "react": "17.0.1",
+    "split": "1.0.1",
+    "through": "2.3.8",
+    "typescript": "4.0.3"
   }
 }
