@@ -17,6 +17,8 @@ $app.stdin.write('line1')
 $app.type('hello, this is input text')
 
 const content = $app.lastFrame()
+
+$app.close()
 ```
 
 ### Stability Index
