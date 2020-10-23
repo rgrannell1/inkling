@@ -39,7 +39,8 @@ export default class Inkling {
             this.ttyIn.emit('keypress', char);
         }
     }
-    rerender() {
+    close() {
+        this.instance.unmount();
     }
 }
 //# sourceMappingURL=index.js.map
