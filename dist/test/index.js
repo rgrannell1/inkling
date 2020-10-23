@@ -27,7 +27,9 @@ class TestApp extends React.Component {
     }
     detectKeyboard() {
         this.state.ttyIn.on('keypress', (key) => {
-            this.state.presses.push(key);
+            this.setState({
+                presses: this.state.presses.concat([key])
+            });
         });
     }
     componentDidMount() {
@@ -63,10 +65,8 @@ const testKeyDetection = () => {
     const $app = new Inkling((data) => {
         return React.createElement(TestKeyApp, { stdin: data.stdin, ttyIn: data.ttyIn });
     });
-    $app.type('hello');
-    setTimeout(() => {
-        console.log($app.frames());
-    }, 5000);
+    $app.type('abcd');
+    tap.includes($app.lastFrame(), 'a\nb\nc\nd');
 };
 testStdinReadWrite();
 testKeyDetection();

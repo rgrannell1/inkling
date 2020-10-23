@@ -40,7 +40,9 @@ abstract class TestApp extends React.Component<any,any> {
   }
   detectKeyboard () {
     this.state.ttyIn.on('keypress', (key:string) => {
-      this.state.presses.push(key)
+      this.setState({
+        presses: this.state.presses.concat([key])
+      })
     })
   }
   componentDidMount () {
@@ -85,7 +87,8 @@ const testKeyDetection = () => {
     return <TestKeyApp stdin={data.stdin} ttyIn={data.ttyIn}/>
   })
 
-  $app.type('hello')
+  $app.type('abcd')
+  tap.includes($app.lastFrame(), 'a\nb\nc\nd')
 }
 
 testStdinReadWrite()
