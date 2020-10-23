@@ -1,6 +1,8 @@
 
 # inkling
 
+![CI](https://github.com/rgrannell1/inkling/workflows/CI/badge.svg)
+
 Inkjs testing library.
 
 ```tsx
