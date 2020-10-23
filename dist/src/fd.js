@@ -1,8 +1,11 @@
 import { EventEmitter } from 'events';
-import emitStream from 'emit-stream';
+import through from 'through';
+const emitStream = (emitter) => {
+    return emitter;
+};
 class Stdout extends EventEmitter {
-    constructor() {
-        super(...arguments);
+    constructor(args) {
+        super(args);
         this.frames = [];
         this.write = (frame) => {
             this.frames.push(frame);
@@ -11,12 +14,8 @@ class Stdout extends EventEmitter {
         this.lastFrame = () => {
             return this._lastFrame;
         };
-    }
-    get rows() {
-        return 25;
-    }
-    get columns() {
-        return 50;
+        this.rows = args.rows;
+        this.columns = args.columns;
     }
 }
 class Stdin extends EventEmitter {
@@ -31,6 +30,8 @@ class Stdin extends EventEmitter {
     setRawMode() { }
     result() { }
     pause() { }
+    pipe(stream) {
+    }
 }
 class Stderr extends EventEmitter {
     constructor() {
@@ -45,7 +46,18 @@ class Stderr extends EventEmitter {
         };
     }
 }
-export const stubStdout = () => emitStream(new Stdout());
-export const stubStderr = () => emitStream(new Stderr());
-export const stubStdin = () => emitStream(new Stdin());
+export const stubStdout = (args) => {
+    const ref = through(function write(data) {
+        this.queue(data);
+        ref._lastFrame = data;
+    });
+    ref.lastFrame = () => ref._lastFrame;
+    return ref;
+};
+export const stubStderr = () => {
+    return through();
+};
+export const stubStdin = () => {
+    return through();
+};
 //# sourceMappingURL=fd.js.map

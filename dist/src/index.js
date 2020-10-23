@@ -2,7 +2,10 @@ import { render as inkRender } from 'ink';
 import { stubStdin, stubStderr, stubStdout } from './fd.js';
 export default class Inkling {
     constructor(getComponent) {
-        this.stdout = stubStdout();
+        this.stdout = stubStdout({
+            rows: 25,
+            columns: 100
+        });
         this.stdin = stubStdin();
         this.stderr = stubStderr();
         const tree = getComponent({
@@ -19,7 +22,8 @@ export default class Inkling {
             patchConsole: false
         });
     }
-    lastFrame() {
+    content() {
+        // -- not defined on event-emitter type, readd.
         return this.stdout.lastFrame();
     }
 }

@@ -46,7 +46,6 @@ export default class Inkling {
     })
   }
   content () {
-    // -- not defined on event-emitter type, readd.
     return this.stdout.lastFrame()
   }
 }

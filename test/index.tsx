@@ -1,4 +1,5 @@
 
+import tap from 'tap'
 import React from 'react'
 import Inkling from '../src/index.js'
 import split from 'split'
@@ -9,11 +10,12 @@ interface AppArgs {
   stdin: any
 }
 
-class App extends React.Component<any,any> {
+class TestApp extends React.Component<any,any> {
   constructor (props:AppArgs) {
     super(props)
 
     this.state = {
+      id: 0,
       lines: [],
       stdin: props.stdin
     }
@@ -30,15 +32,23 @@ class App extends React.Component<any,any> {
   }
   render () {
     let elems = this.state.lines.map((line:string) => {
-      return <Text>{line}</Text>
+      return <Text key={line}>{line}</Text>
     })
 
     return <>{elems}</>
   }
 }
 
-const $app = new Inkling((data:any) => {
-  return <App stdin={data.stdin}/>
-})
 
-console.log($app.content())
+const testStdinReadWrite = () => {
+  const $app = new Inkling((data:any) => {
+    return <TestApp stdin={data.stdin}/>
+  })
+
+  const message = 'a\nb\nc\nd'
+  $app.stdin.write(`${message}\n`)
+
+  tap.include($app.content(), message)
+}
+
+testStdinReadWrite()

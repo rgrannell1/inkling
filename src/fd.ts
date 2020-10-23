@@ -1,5 +1,6 @@
 
 import { EventEmitter } from 'events'
+import through from 'through'
 
 const emitStream = (emitter:EventEmitter) => {
 	return emitter
@@ -40,7 +41,10 @@ class Stdin extends EventEmitter {
   setEncoding () { }
   setRawMode () { }
   result () { }
-  pause () { }
+	pause () { }
+	pipe (stream:any) {
+
+	}
 }
 
 class Stderr extends EventEmitter {
@@ -57,12 +61,23 @@ class Stderr extends EventEmitter {
 	}
 }
 
+interface StubStdout extends through.ThroughStream {
+	lastFrame? (): string | undefined
+	_lastFrame?: string
+}
+
 export const stubStdout = (args:StdoutArgs) => {
-	return emitStream(new Stdout(args))
+	const ref:StubStdout = through(function write (data:string) {
+		this.queue(data)
+		ref._lastFrame = data
+	})
+	ref.lastFrame = () => ref._lastFrame
+
+	return ref
 }
 export const stubStderr = () => {
-	return emitStream(new Stderr())
+	return through()
 }
 export const stubStdin = () => {
-	return emitStream(new Stdin())
+	return through()
 }
