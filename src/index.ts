@@ -6,13 +6,15 @@ import type {Instance as InkInstance} from 'ink'
 import {
   stubStdin,
   stubStderr,
-  stubStdout
+  stubStdout,
+  stubTtyIn
 } from './fd.js'
 
 interface GetComponentArgs {
   stdin: any,
   stderr: any,
-  stdout: any
+  stdout: any,
+  ttyIn: any
 }
 
 type GetComponent = (data:GetComponentArgs) => ReactElement
@@ -22,6 +24,7 @@ export default class Inkling {
   stdin:any
   stdout:any
   stderr:any
+  ttyIn:any
   constructor (getComponent:GetComponent) {
     this.stdout = stubStdout({
       rows: 25,
@@ -29,11 +32,13 @@ export default class Inkling {
     })
     this.stdin = stubStdin()
     this.stderr = stubStderr()
+    this.ttyIn = stubTtyIn()
 
     const tree = getComponent({
       stdin: this.stdin,
       stdout: this.stdout,
-      stderr: this.stderr
+      stderr: this.stderr,
+      ttyIn: this.ttyIn
     })
 
     this.instance = inkRender(tree, {
@@ -47,5 +52,14 @@ export default class Inkling {
   }
   content () {
     return this.stdout.lastFrame()
+  }
+  press (data:string) {
+    this.ttyIn.emit('keypress', data)
+  }
+  type (data:string) {
+    for (const char of data) {
+      // -- events aren't necessarily ordered.
+      this.ttyIn.emit('keypress', char)
+    }
   }
 }

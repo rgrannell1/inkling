@@ -1,5 +1,5 @@
 import { render as inkRender } from 'ink';
-import { stubStdin, stubStderr, stubStdout } from './fd.js';
+import { stubStdin, stubStderr, stubStdout, stubTtyIn } from './fd.js';
 export default class Inkling {
     constructor(getComponent) {
         this.stdout = stubStdout({
@@ -8,10 +8,12 @@ export default class Inkling {
         });
         this.stdin = stubStdin();
         this.stderr = stubStderr();
+        this.ttyIn = stubTtyIn();
         const tree = getComponent({
             stdin: this.stdin,
             stdout: this.stdout,
-            stderr: this.stderr
+            stderr: this.stderr,
+            ttyIn: this.ttyIn
         });
         this.instance = inkRender(tree, {
             stdout: this.stdout,
@@ -23,8 +25,10 @@ export default class Inkling {
         });
     }
     content() {
-        // -- not defined on event-emitter type, readd.
         return this.stdout.lastFrame();
+    }
+    press(data) {
+        this.ttyIn.emit('keypress', data);
     }
 }
 //# sourceMappingURL=index.js.map

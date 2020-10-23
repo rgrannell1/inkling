@@ -1,4 +1,5 @@
 
+import readline from 'readline'
 import tap from 'tap'
 import React from 'react'
 import Inkling from '../src/index.js'
@@ -6,21 +7,28 @@ import split from 'split'
 import through from 'through'
 import { Text } from 'ink'
 
-interface AppArgs {
-  stdin: any
+interface TtyIn {
+  on: Function
 }
 
-class TestApp extends React.Component<any,any> {
+interface AppArgs {
+  stdin: any,
+  ttyIn: TtyIn
+}
+
+abstract class TestApp extends React.Component<any,any> {
   constructor (props:AppArgs) {
     super(props)
 
     this.state = {
       id: 0,
       lines: [],
-      stdin: props.stdin
+      presses: [],
+      stdin: props.stdin,
+      ttyIn: props.ttyIn
     }
   }
-  componentDidMount () {
+  storeStdin () {
     this.state.stdin
       .pipe(split())
       .pipe(through((line:string) => {
@@ -30,6 +38,18 @@ class TestApp extends React.Component<any,any> {
       }))
       .on('end', () => { })
   }
+  detectKeyboard () {
+    this.state.ttyIn.on('keypress', (key:string) => {
+      this.state.presses.push(key)
+    })
+  }
+  componentDidMount () {
+    this.storeStdin()
+    this.detectKeyboard()
+  }
+}
+
+class TestStdinApp extends TestApp {
   render () {
     let elems = this.state.lines.map((line:string) => {
       return <Text key={line}>{line}</Text>
@@ -39,10 +59,19 @@ class TestApp extends React.Component<any,any> {
   }
 }
 
+class TestKeyApp extends TestApp {
+  render () {
+    let elems = this.state.presses.map((key:string) => {
+      return <Text key={key}>{key}</Text>
+    })
+
+    return <>{elems}</>
+  }
+}
 
 const testStdinReadWrite = () => {
   const $app = new Inkling((data:any) => {
-    return <TestApp stdin={data.stdin}/>
+    return <TestStdinApp stdin={data.stdin} ttyIn={data.ttyIn}/>
   })
 
   const message = 'a\nb\nc\nd'
@@ -51,4 +80,15 @@ const testStdinReadWrite = () => {
   tap.include($app.content(), message)
 }
 
+const testKeyDetection = () => {
+  const $app = new Inkling((data:any) => {
+    return <TestKeyApp stdin={data.stdin} ttyIn={data.ttyIn}/>
+  })
+
+  for (const char of 'hello') {
+    $app.press(char)
+  }
+}
+
 testStdinReadWrite()
+testKeyDetection()
