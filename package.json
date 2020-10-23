@@ -17,7 +17,6 @@
     "@types/tap": "^14.10.1",
     "@types/through": "0.0.30",
     "@types/typescript": "2.0.0",
-    "emit-stream": "0.1.2",
     "ink": "3.0.8",
     "react": "17.0.1",
     "split": "1.0.1",
