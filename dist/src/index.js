@@ -24,11 +24,22 @@ export default class Inkling {
             patchConsole: false
         });
     }
-    content() {
+    frames() {
+        return this.stdout?.frames();
+    }
+    lastFrame() {
         return this.stdout.lastFrame();
     }
     press(data) {
         this.ttyIn.emit('keypress', data);
+    }
+    type(data) {
+        for (const char of data) {
+            // -- events aren't necessarily ordered.
+            this.ttyIn.emit('keypress', char);
+        }
+    }
+    rerender() {
     }
 }
 //# sourceMappingURL=index.js.map

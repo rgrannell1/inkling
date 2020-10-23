@@ -14,6 +14,12 @@ interface StdoutArgs {
 export const stubStdout = (args:StdoutArgs) => {
 	const ref:StubStdout = through(function write (data:string) {
 		this.queue(data)
+
+		if (!ref._frames) {
+			ref._frames = []
+		}
+
+		ref._frames.push(data)
 		ref._lastFrame = data
 	})
 
@@ -26,6 +32,9 @@ export const stubStdout = (args:StdoutArgs) => {
 		},
 		lastFrame () {
 			return ref._lastFrame
+		},
+		frames () {
+			return ref._frames
 		}
 	})
 }

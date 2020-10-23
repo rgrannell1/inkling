@@ -50,7 +50,10 @@ export default class Inkling {
       patchConsole: false
     })
   }
-  content () {
+  frames () {
+    return this.stdout?.frames()
+  }
+  lastFrame () {
     return this.stdout.lastFrame()
   }
   press (data:string) {
@@ -61,5 +64,8 @@ export default class Inkling {
       // -- events aren't necessarily ordered.
       this.ttyIn.emit('keypress', char)
     }
+  }
+  rerender () {
+
   }
 }

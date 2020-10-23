@@ -3,6 +3,10 @@ import through from 'through';
 export const stubStdout = (args) => {
     const ref = through(function write(data) {
         this.queue(data);
+        if (!ref._frames) {
+            ref._frames = [];
+        }
+        ref._frames.push(data);
         ref._lastFrame = data;
     });
     return Object.assign(ref, {
@@ -14,6 +18,9 @@ export const stubStdout = (args) => {
         },
         lastFrame() {
             return ref._lastFrame;
+        },
+        frames() {
+            return ref._frames;
         }
     });
 };

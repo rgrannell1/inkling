@@ -57,15 +57,16 @@ const testStdinReadWrite = () => {
     });
     const message = 'a\nb\nc\nd';
     $app.stdin.write(`${message}\n`);
-    tap.include($app.content(), message);
+    tap.include($app.lastFrame(), message);
 };
 const testKeyDetection = () => {
     const $app = new Inkling((data) => {
         return React.createElement(TestKeyApp, { stdin: data.stdin, ttyIn: data.ttyIn });
     });
-    for (const char of 'hello') {
-        $app.press(char);
-    }
+    $app.type('hello');
+    setTimeout(() => {
+        console.log($app.frames());
+    }, 5000);
 };
 testStdinReadWrite();
 testKeyDetection();
