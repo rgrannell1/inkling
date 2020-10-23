@@ -3,7 +3,8 @@
 
 ![CI](https://github.com/rgrannell1/inkling/workflows/CI/badge.svg)
 
-Inkling
+Inkling is a puppeteer-style testing library based on [ink-testing-library](https://github.com/vadimdemedes/ink-testing-library). It differs in providing
+convenience wrappers for sending interactive inputs.
 
 ```tsx
 $app = new Inkling(({stdin}) => {
