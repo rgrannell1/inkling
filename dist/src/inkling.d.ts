@@ -6,6 +6,13 @@ interface GetComponentArgs {
     stdout: any;
     ttyIn: any;
 }
+interface KeyPress {
+    ctrl: Boolean;
+    meta: Boolean;
+    shift: Boolean;
+    sequence: string;
+    name: string | undefined;
+}
 declare type GetComponent = (data: GetComponentArgs) => ReactElement;
 export default class Inkling {
     instance: InkInstance;
@@ -16,7 +23,7 @@ export default class Inkling {
     constructor(getComponent: GetComponent);
     frames(): any;
     lastFrame(): any;
-    press(data: string): void;
+    press(data: KeyPress): void;
     type(data: string): void;
     close(): void;
 }

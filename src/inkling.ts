@@ -18,6 +18,14 @@ interface GetComponentArgs {
   ttyIn: any
 }
 
+interface KeyPress {
+  ctrl: Boolean,
+  meta: Boolean,
+  shift: Boolean,
+  sequence: string,
+  name: string | undefined
+}
+
 type GetComponent = (data:GetComponentArgs) => ReactElement
 
 export default class Inkling {
@@ -57,7 +65,7 @@ export default class Inkling {
   lastFrame () {
     return this.stdout.lastFrame()
   }
-  press (data:string) {
+  press (data:KeyPress) {
     this.ttyIn.emit('keypress', data)
   }
   type (data:string) {
