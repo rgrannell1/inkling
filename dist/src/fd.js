@@ -30,7 +30,8 @@ export class TTYIn extends events.EventEmitter {
         this.isTTY = true;
     }
     press(data) {
-        this.emit('keypress', data);
+        const [char] = data;
+        this.emit('keypress', char);
     }
     setEncoding() { }
     setRawMode() { }

@@ -1,5 +1,4 @@
 
-import readline from 'readline'
 import tap from 'tap'
 import React from 'react'
 import Inkling from '../src/inkling.js'

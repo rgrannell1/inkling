@@ -42,7 +42,8 @@ export const stubStdout = (args:StdoutArgs) => {
 export class TTYIn extends events.EventEmitter {
 	isTTY = true
 	press (data: string) {
-		this.emit('keypress', data)
+		const [char] = data
+		this.emit('keypress', char)
 	}
 	setEncoding() { }
 	setRawMode() { }
