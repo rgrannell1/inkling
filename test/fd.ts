@@ -10,6 +10,23 @@ const testStdin = () => {
   const stream = fd.stubStdin()
 }
 
+const testStdout = async () => {
+  const stream = fd.stubStdout({
+    columns: 100,
+    rows: 20
+  })
+
+  stream.write('test')
+
+  const text = await new Promise(resolve => {
+    stream.on('data', (data:string) => {
+      resolve(data)
+    })
+  })
+
+  tap.equal(text, 'test')
+}
+
 const testTtyIn = async () => {
   const stream = fd.stubTtyIn()
   stream.press('a')
@@ -25,4 +42,5 @@ const testTtyIn = async () => {
 
 testStderr()
 testStdin()
+testStdout()
 testTtyIn()
