@@ -70,4 +70,3 @@ const testKeyDetection = () => {
 };
 testStdinReadWrite();
 testKeyDetection();
-//# sourceMappingURL=index.js.map

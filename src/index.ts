@@ -1,4 +1,5 @@
 
+import React from 'react'
 import type {ReactElement} from 'react'
 import {render as inkRender} from 'ink'
 import type {Instance as InkInstance} from 'ink'

@@ -43,4 +43,3 @@ export default class Inkling {
         this.instance.unmount();
     }
 }
-//# sourceMappingURL=index.js.map
