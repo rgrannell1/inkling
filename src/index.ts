@@ -68,5 +68,6 @@ export default class Inkling {
   }
   close () {
     this.instance.unmount()
+    this.instance.cleanup()
   }
 }
