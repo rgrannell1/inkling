@@ -21,7 +21,6 @@
     "@types/through": "0.0.30",
     "@types/typescript": "2.0.0",
     "ink": "3.0.8",
-    "react": "17.0.1",
     "split": "1.0.1",
     "tap": "^14.10.8",
     "through": "2.3.8",
