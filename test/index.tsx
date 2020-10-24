@@ -2,7 +2,7 @@
 import readline from 'readline'
 import tap from 'tap'
 import React from 'react'
-import Inkling from '../src/index.js'
+import Inkling from '../src/inkling.js'
 import split from 'split'
 import through from 'through'
 import { Text } from 'ink'
