@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc -d",
     "tsc": "tsc -d",
-    "test": "tsc && rm dist/test/index.d.ts && npx tap dist/test --no-esm"
+    "test": "rm -rf dist && tsc && rm dist/test/index.d.ts && npx tap dist/test --no-esm"
   },
   "author": "Róisín Grannell <r.grannell2@gmail.com>",
   "license": "MIT",
