@@ -46,3 +46,4 @@ export const stubStdin = () => {
 export const stubTtyIn = () => {
     return new TTYIn();
 };
+//# sourceMappingURL=fd.js.map

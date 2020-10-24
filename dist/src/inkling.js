@@ -42,5 +42,10 @@ export default class Inkling {
     close() {
         this.instance.unmount();
         this.instance.cleanup();
+        this.stdout.emit('end');
+        this.stdin.emit('end');
+        this.stderr.emit('end');
+        this.ttyIn.emit('end');
     }
 }
+//# sourceMappingURL=inkling.js.map
