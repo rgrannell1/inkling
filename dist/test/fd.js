@@ -1,10 +1,24 @@
 import tap from 'tap';
 import * as fd from '../src/fd.js';
-const testStderr = () => {
+const testStderr = async () => {
     const stream = fd.stubStderr();
+    stream.write('test');
+    const text = await new Promise(resolve => {
+        stream.on('data', (data) => {
+            resolve(data);
+        });
+    });
+    tap.equal(text, 'test');
 };
-const testStdin = () => {
+const testStdin = async () => {
     const stream = fd.stubStdin();
+    stream.write('test');
+    const text = await new Promise(resolve => {
+        stream.on('data', (data) => {
+            resolve(data);
+        });
+    });
+    tap.equal(text, 'test');
 };
 const testStdout = async () => {
     const stream = fd.stubStdout({
@@ -18,6 +32,8 @@ const testStdout = async () => {
         });
     });
     tap.equal(text, 'test');
+    tap.equals(stream.columns, 100);
+    tap.equals(stream.rows, 20);
 };
 const testTtyIn = async () => {
     const stream = fd.stubTtyIn();
