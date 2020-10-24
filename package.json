@@ -6,9 +6,9 @@
   "types": "dist/src/inkling.d.ts",
   "main": "dist/src/inkling.js",
   "scripts": {
-    "build": "tsc",
-    "tsc": "tsc",
-    "test": "npm run build && rm dist/test/index.d.ts && npx tap dist/test --no-esm"
+    "build": "tsc -d",
+    "tsc": "tsc -d",
+    "test": "tsc && rm dist/test/index.d.ts && npx tap dist/test --no-esm"
   },
   "author": "Róisín Grannell <r.grannell2@gmail.com>",
   "license": "MIT",
