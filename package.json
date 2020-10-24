@@ -7,9 +7,8 @@
   "main": "dist/src/inkling.js",
   "scripts": {
     "build": "tsc",
-    "prepare": "tsc",
     "tsc": "tsc",
-    "test": "npm run tsc && npx tap dist/test --no-esm"
+    "test": "npm run build && npx tap dist/test --no-esm"
   },
   "author": "Róisín Grannell <r.grannell2@gmail.com>",
   "license": "MIT",
