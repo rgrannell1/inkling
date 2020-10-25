@@ -66,7 +66,7 @@ export default class Inkling {
     return this.stdout.lastFrame()
   }
   press (data:KeyPress) {
-    this.ttyIn.emit('keypress', data)
+    this.ttyIn.emit('keypress', data.sequence, data)
   }
   type (data:string) {
     for (const char of data) {
