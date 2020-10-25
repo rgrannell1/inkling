@@ -1,6 +1,6 @@
 import { render as inkRender } from 'ink';
 import { stubStdin, stubStderr, stubStdout, stubTtyIn } from './fd.js';
-export default class Inkling {
+export class Inkling {
     constructor(getComponent) {
         this.stdout = stubStdout({
             rows: 25,
@@ -42,4 +42,14 @@ export default class Inkling {
         this.ttyIn.emit('end');
     }
 }
+export class KeyPress {
+    constructor(name) {
+        this.name = name;
+        this.sequence = name;
+        this.meta = false;
+        this.ctrl = false;
+        this.shift = false;
+    }
+}
+KeyPress.ESCAPE = new KeyPress('escape');
 //# sourceMappingURL=inkling.js.map

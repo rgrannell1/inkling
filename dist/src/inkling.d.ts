@@ -6,15 +6,8 @@ interface GetComponentArgs {
     stdout: any;
     ttyIn: any;
 }
-interface KeyPress {
-    ctrl: Boolean;
-    meta: Boolean;
-    shift: Boolean;
-    sequence: string;
-    name: string | undefined;
-}
 declare type GetComponent = (data: GetComponentArgs) => ReactElement;
-export default class Inkling {
+export declare class Inkling {
     instance: InkInstance;
     stdin: any;
     stdout: any;
@@ -25,5 +18,14 @@ export default class Inkling {
     lastFrame(): any;
     press(data: KeyPress): void;
     close(): void;
+}
+export declare class KeyPress {
+    name?: string;
+    sequence?: string;
+    meta?: boolean;
+    ctrl?: boolean;
+    shift?: boolean;
+    constructor(name: string);
+    static ESCAPE: KeyPress;
 }
 export {};

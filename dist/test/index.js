@@ -1,6 +1,6 @@
 import tap from 'tap';
 import React from 'react';
-import Inkling from '../src/inkling.js';
+import { Inkling, KeyPress } from '../src/inkling.js';
 import split from 'split';
 import through from 'through';
 import { Text } from 'ink';
@@ -65,34 +65,10 @@ const testKeyDetection = () => {
     const $app = new Inkling((data) => {
         return React.createElement(TestKeyApp, { stdin: data.stdin, ttyIn: data.ttyIn });
     });
-    $app.press({
-        name: 'a',
-        sequence: 'a',
-        meta: false,
-        ctrl: false,
-        shift: false
-    });
-    $app.press({
-        name: 'b',
-        sequence: 'b',
-        meta: false,
-        ctrl: false,
-        shift: false
-    });
-    $app.press({
-        name: 'c',
-        sequence: 'c',
-        meta: false,
-        ctrl: false,
-        shift: false
-    });
-    $app.press({
-        name: 'd',
-        sequence: 'd',
-        meta: false,
-        ctrl: false,
-        shift: false
-    });
+    $app.press(new KeyPress('a'));
+    $app.press(new KeyPress('b'));
+    $app.press(new KeyPress('c'));
+    $app.press(new KeyPress('d'));
     tap.includes($app.lastFrame(), 'a\nb\nc\nd');
 };
 testStdinReadWrite();
