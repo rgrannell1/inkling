@@ -31,13 +31,7 @@ export default class Inkling {
         return this.stdout.lastFrame();
     }
     press(data) {
-        this.ttyIn.emit('keypress', data);
-    }
-    type(data) {
-        for (const char of data) {
-            // -- events aren't necessarily ordered.
-            this.ttyIn.emit('keypress', char);
-        }
+        this.ttyIn.emit('keypress', data.sequence, data);
     }
     close() {
         this.instance.unmount();

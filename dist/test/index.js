@@ -65,7 +65,34 @@ const testKeyDetection = () => {
     const $app = new Inkling((data) => {
         return React.createElement(TestKeyApp, { stdin: data.stdin, ttyIn: data.ttyIn });
     });
-    $app.type('abcd');
+    $app.press({
+        name: 'a',
+        sequence: 'a',
+        meta: false,
+        ctrl: false,
+        shift: false
+    });
+    $app.press({
+        name: 'b',
+        sequence: 'b',
+        meta: false,
+        ctrl: false,
+        shift: false
+    });
+    $app.press({
+        name: 'c',
+        sequence: 'c',
+        meta: false,
+        ctrl: false,
+        shift: false
+    });
+    $app.press({
+        name: 'd',
+        sequence: 'd',
+        meta: false,
+        ctrl: false,
+        shift: false
+    });
     tap.includes($app.lastFrame(), 'a\nb\nc\nd');
 };
 testStdinReadWrite();

@@ -24,7 +24,6 @@ export default class Inkling {
     frames(): any;
     lastFrame(): any;
     press(data: KeyPress): void;
-    type(data: string): void;
     close(): void;
 }
 export {};

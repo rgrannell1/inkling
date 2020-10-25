@@ -68,12 +68,6 @@ export default class Inkling {
   press (data:KeyPress) {
     this.ttyIn.emit('keypress', data.sequence, data)
   }
-  type (data:string) {
-    for (const char of data) {
-      // -- events aren't necessarily ordered.
-      this.ttyIn.emit('keypress', char)
-    }
-  }
   close () {
     this.instance.unmount()
     this.instance.cleanup()
