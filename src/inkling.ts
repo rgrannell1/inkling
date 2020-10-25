@@ -18,17 +18,9 @@ interface GetComponentArgs {
   ttyIn: any
 }
 
-interface KeyPress {
-  ctrl: Boolean,
-  meta: Boolean,
-  shift: Boolean,
-  sequence: string,
-  name: string | undefined
-}
-
 type GetComponent = (data:GetComponentArgs) => ReactElement
 
-export default class Inkling {
+export class Inkling {
   instance:InkInstance
   stdin:any
   stdout:any
@@ -77,4 +69,20 @@ export default class Inkling {
     this.stderr.emit('end')
     this.ttyIn.emit('end')
   }
+}
+
+export class KeyPress {
+  name?: string
+  sequence?: string
+  meta?: boolean
+  ctrl?: boolean
+  shift?: boolean
+  constructor (name:string) {
+    this.name = name
+    this.sequence = name
+    this.meta = false
+    this.ctrl = false
+    this.shift = false
+  }
+  static ESCAPE = new KeyPress('escape')
 }
