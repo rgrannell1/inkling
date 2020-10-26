@@ -58,7 +58,7 @@ export class Inkling {
     return this.stdout.lastFrame()
   }
   waitUntil (pred:(val:string) => Boolean, timeout:number = 10_000) {
-    const donePromise = new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const start = Date.now()
 
       while (true) {
