@@ -89,8 +89,6 @@ const testKeyDetection = () => {
     return <TestKeyApp stdin={data.stdin} ttyIn={data.ttyIn}/>
   })
 
-
-
   $app.press(new KeyPress('a'))
   $app.press(new KeyPress('b'))
   $app.press(new KeyPress('c'))

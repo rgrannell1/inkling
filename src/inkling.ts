@@ -57,6 +57,28 @@ export class Inkling {
   lastFrame () {
     return this.stdout.lastFrame()
   }
+  waitUntil (pred:(val:string) => Boolean, timeout:number = 10_000) {
+    const donePromise = new Promise(async (resolve, reject) => {
+      const start = Date.now()
+
+      while (true) {
+        if (pred(this.lastFrame())) {
+          resolve()
+        } else {
+
+          let elapsed = Date.now() - start
+          if (elapsed > timeout) {
+            reject(`${elapsed} elapsed`)
+          }
+
+          // -- not great, but it will work for polling.
+          await new Promise(resolve => {
+            setTimeout(resolve, 100)
+          })
+        }
+      }
+    })
+  }
   press (data:KeyPress) {
     this.ttyIn.emit('keypress', data.sequence, data)
   }
