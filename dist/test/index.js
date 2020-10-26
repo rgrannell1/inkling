@@ -53,13 +53,17 @@ class TestKeyApp extends TestApp {
         return React.createElement(React.Fragment, null, elems);
     }
 }
-const testStdinReadWrite = () => {
+const testStdinReadWrite = async () => {
     const $app = new Inkling((data) => {
         return React.createElement(TestStdinApp, { stdin: data.stdin, ttyIn: data.ttyIn });
     });
     const message = 'a\nb\nc\nd';
     $app.stdin.write(`${message}\n`);
+    await $app.waitUntil((frame) => {
+        return frame.includes(message);
+    });
     tap.include($app.lastFrame(), message);
+    throw 'xx';
 };
 const testKeyDetection = () => {
     const $app = new Inkling((data) => {

@@ -73,13 +73,17 @@ class TestKeyApp extends TestApp {
   }
 }
 
-const testStdinReadWrite = () => {
+const testStdinReadWrite = async () => {
   const $app = new Inkling((data:any) => {
     return <TestStdinApp stdin={data.stdin} ttyIn={data.ttyIn}/>
   })
 
   const message = 'a\nb\nc\nd'
   $app.stdin.write(`${message}\n`)
+
+  await $app.waitUntil((frame:string) => {
+    return frame.includes(message)
+  })
 
   tap.include($app.lastFrame(), message)
 }

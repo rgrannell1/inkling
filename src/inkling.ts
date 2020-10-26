@@ -62,19 +62,18 @@ export class Inkling {
       const start = Date.now()
 
       while (true) {
-        if (pred(this.lastFrame())) {
-          resolve()
+        let isMatch = pred(this.lastFrame())
+        if (isMatch) {
+          return resolve()
         } else {
-
+          // -- throw an error if too long has passed
           let elapsed = Date.now() - start
           if (elapsed > timeout) {
             reject(`${elapsed} elapsed`)
           }
 
           // -- not great, but it will work for polling.
-          await new Promise(resolve => {
-            setTimeout(resolve, 100)
-          })
+          await new Promise(resolve => setTimeout(resolve, 250))
         }
       }
     })
