@@ -63,7 +63,6 @@ const testStdinReadWrite = async () => {
         return frame.includes(message);
     });
     tap.include($app.lastFrame(), message);
-    throw 'xx';
 };
 const testKeyDetection = () => {
     const $app = new Inkling((data) => {

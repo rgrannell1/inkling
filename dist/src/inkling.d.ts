@@ -16,6 +16,7 @@ export declare class Inkling {
     constructor(getComponent: GetComponent);
     frames(): any;
     lastFrame(): any;
+    wait(timeout: number): Promise<unknown>;
     waitUntil(pred: (val: string) => Boolean, timeout?: number): Promise<unknown>;
     press(data: KeyPress): void;
     close(): void;

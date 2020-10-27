@@ -30,6 +30,9 @@ export class Inkling {
     lastFrame() {
         return this.stdout.lastFrame();
     }
+    wait(timeout) {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    }
     waitUntil(pred, timeout = 10000) {
         return new Promise(async (resolve, reject) => {
             const start = Date.now();

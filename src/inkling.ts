@@ -10,6 +10,7 @@ import {
   stubStdout,
   stubTtyIn
 } from './fd.js'
+import { time } from 'console'
 
 interface GetComponentArgs {
   stdin: any,
@@ -56,6 +57,9 @@ export class Inkling {
   }
   lastFrame () {
     return this.stdout.lastFrame()
+  }
+  wait (timeout:number) {
+    return new Promise(resolve => setTimeout(resolve, timeout))
   }
   waitUntil (pred:(val:string) => Boolean, timeout:number = 10_000) {
     return new Promise(async (resolve, reject) => {
