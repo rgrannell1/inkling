@@ -36,8 +36,10 @@ export class Inkling {
     waitUntil(pred, timeout = 10000) {
         return new Promise(async (resolve, reject) => {
             const start = Date.now();
+            let lastFrame = '';
             while (true) {
-                let isMatch = pred(this.lastFrame());
+                lastFrame = this.lastFrame();
+                let isMatch = pred(lastFrame);
                 if (isMatch) {
                     return resolve();
                 }
@@ -45,7 +47,7 @@ export class Inkling {
                     // -- throw an error if too long has passed
                     let elapsed = Date.now() - start;
                     if (elapsed > timeout) {
-                        reject(`${elapsed} elapsed`);
+                        reject(`${elapsed}ms elapsed; test failed for \n${lastFrame}`);
                     }
                     // -- not great, but it will work for polling.
                     await new Promise(resolve => setTimeout(resolve, 250));

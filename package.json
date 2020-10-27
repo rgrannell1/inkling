@@ -1,6 +1,6 @@
 {
   "name": "@rgrannell/inkling",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "description": "Inkling is a puppeteer-style testing library based on ink-testing-library",
   "types": "dist/src/inkling.d.ts",
