@@ -19,6 +19,7 @@ export declare class Inkling {
     wait(timeout: number): Promise<unknown>;
     waitUntil(pred: (val: string) => Boolean, timeout?: number): Promise<unknown>;
     press(data: KeyPress): void;
+    toStdin(lines: string[]): void;
     close(): void;
 }
 export declare class KeyPress {

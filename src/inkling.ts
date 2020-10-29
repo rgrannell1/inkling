@@ -87,6 +87,11 @@ export class Inkling {
   press (data:KeyPress) {
     this.ttyIn.emit('keypress', data.sequence, data)
   }
+  toStdin (lines:string[]) {
+    lines.forEach(line => {
+      this.stdin.write(`${line}\n`)
+    })
+  }
   close () {
     this.instance.unmount()
     this.instance.cleanup()
@@ -112,4 +117,5 @@ export class KeyPress {
     this.shift = false
   }
   static ESCAPE = new KeyPress('escape')
+  static ENTER = new KeyPress('return')
 }

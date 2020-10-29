@@ -58,6 +58,11 @@ export class Inkling {
     press(data) {
         this.ttyIn.emit('keypress', data.sequence, data);
     }
+    toStdin(lines) {
+        lines.forEach(line => {
+            this.stdin.write(`${line}\n`);
+        });
+    }
     close() {
         this.instance.unmount();
         this.instance.cleanup();
